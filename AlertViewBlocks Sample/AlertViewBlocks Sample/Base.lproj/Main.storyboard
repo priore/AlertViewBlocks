@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0qo-wz-odb">
+                                <rect key="frame" x="72" y="64" width="176" height="91"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="91" id="COA-gk-eCM"/>
+                                    <constraint firstAttribute="width" constant="176" id="cUt-Vx-fc6"/>
+                                </constraints>
+                                <state key="normal" title="Standard AlertView"/>
+                                <connections>
+                                    <action selector="didAlertViewSelected:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="QyA-BE-TnE"/>
+                                </connections>
+                            </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgG-vG-OKL">
+                                <rect key="frame" x="72" y="163" width="176" height="91"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="91" id="n2g-dG-fct"/>
+                                    <constraint firstAttribute="width" constant="176" id="ro9-gb-deT"/>
+                                </constraints>
+                                <state key="normal" title="Yes/No AlertView"/>
+                                <connections>
+                                    <action selector="didAlertViewYesNoSelected:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="mZN-we-G3D"/>
+                                </connections>
+                            </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMI-2n-CsH">
+                                <rect key="frame" x="72" y="262" width="176" height="91"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="176" id="csl-ar-ZWf"/>
+                                    <constraint firstAttribute="height" constant="91" id="ybM-Nh-kBv"/>
+                                </constraints>
+                                <state key="normal" title="Multi buttons AlertView"/>
+                                <connections>
+                                    <action selector="didAlertViewMultiSelected:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="oVA-gv-G5g"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0qo-wz-odb" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="44" id="1bl-bZ-WqG"/>
+                            <constraint firstItem="yMI-2n-CsH" firstAttribute="top" secondItem="cgG-vG-OKL" secondAttribute="bottom" constant="8" id="RlP-rR-6qY"/>
+                            <constraint firstAttribute="centerX" secondItem="yMI-2n-CsH" secondAttribute="centerX" id="pWV-ZC-iAe"/>
+                            <constraint firstAttribute="centerX" secondItem="0qo-wz-odb" secondAttribute="centerX" id="qBM-xm-Y3F"/>
+                            <constraint firstItem="cgG-vG-OKL" firstAttribute="top" secondItem="0qo-wz-odb" secondAttribute="bottom" constant="8" id="ukq-7Z-nDJ"/>
+                            <constraint firstAttribute="centerX" secondItem="cgG-vG-OKL" secondAttribute="centerX" id="vKk-JE-UX4"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="181.33333333333334" y="327.54666666666668"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
