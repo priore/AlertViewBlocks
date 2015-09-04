@@ -34,15 +34,13 @@ Makes really easy to use AlertView without having a instance variable.
 ```
 
 ``` objective-c
-    static AlertViewBlocks *alertView;
-    alertView = [[AlertViewBlocks alloc] initAlertWithTitle:@"Title" message:@"your message here" 
-    cancelButtonTitle:@"Cancel" confirm:^(NSInteger index) {
+    [AlertViewBlocks alertWithTitle:@"Title" message:@"you message here" confirm:^(NSInteger index) {
 
         NSLog(@"Button #%i selected!", index);
-        
-    } cancel:^{
     
+    } cancel:^{
+
         NSLog(@"Cancel button selected!");
-        
+    
     } otherButtonTitles:@"Button 1", @"Button 2", @"Button 3", nil];
 ```
