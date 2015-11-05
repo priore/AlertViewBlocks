@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         	= 'AlertViewBlocks'
-  s.version      	= '1.0.0'
+  s.version      	= '1.0.1'
   s.platform        = :ios, '7.1'
   s.summary      	= 'UIAlertView using blocks'
   s.description		= 'Makes really easy to use AlertView without having a instance variable.'
