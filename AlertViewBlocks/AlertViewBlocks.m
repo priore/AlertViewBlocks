@@ -42,7 +42,7 @@ static AlertViewBlocks *alertViewBlocks;
 {
     va_list args;
     va_start(args, otherButtonTitles);
-    alertViewBlocks = [[AlertViewBlocks alloc] initAlertWithTitle:title message:message cancelButtonTitle:@"Cancel" confirm:confirm cancel:cancel firstArgument:otherButtonTitles arguments:args];
+    alertViewBlocks = [[AlertViewBlocks alloc] initAlertWithTitle:title message:message cancelButtonTitle:NSLocalizedString(@"Cancel", nil) confirm:confirm cancel:cancel firstArgument:otherButtonTitles arguments:args];
     va_end(args);
 }
 
@@ -58,7 +58,7 @@ static AlertViewBlocks *alertViewBlocks;
         confirmBlock = [confirm copy];
         cancelBlock = [cancel copy];
         
-        alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:yesNo ? @"No" : @"Cancel" otherButtonTitles:yesNo ? @"Yes" : @"Ok", nil];
+        alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:yesNo ? NSLocalizedString(@"No", nil) : NSLocalizedString(@"Cancel", nil) otherButtonTitles:yesNo ? NSLocalizedString(@"Yes", nil) : NSLocalizedString(@"Ok", nil), nil];
         [alertView show];
         
     }
@@ -73,7 +73,7 @@ static AlertViewBlocks *alertViewBlocks;
         confirmBlock = nil;
         cancelBlock = [confirm copy];
         
-        alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil];
         [alertView show];
     }
     
@@ -108,9 +108,9 @@ static AlertViewBlocks *alertViewBlocks;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (indexBlock != nil) {
+    if (indexBlock) {
         if (buttonIndex == 0) {
-            if (cancelBlock != nil)
+            if (cancelBlock)
                 cancelBlock();
         }
         else
@@ -119,10 +119,10 @@ static AlertViewBlocks *alertViewBlocks;
     } else {
         switch (buttonIndex) {
             case 0: // cancel
-                if (cancelBlock != nil) cancelBlock();
+                if (cancelBlock) cancelBlock();
                 break;
             case 1: // ok
-                if (confirmBlock != nil) confirmBlock();
+                if (confirmBlock) confirmBlock();
             default:
                 break;
         }
