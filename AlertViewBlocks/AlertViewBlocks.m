@@ -42,7 +42,7 @@ static AlertViewBlocks *alertViewBlocks;
 {
     va_list args;
     va_start(args, otherButtonTitles);
-    alertViewBlocks = [[AlertViewBlocks alloc] initAlertWithTitle:title message:message cancelButtonTitle:NSLocalizedString(@"Cancel", nil) confirm:confirm cancel:cancel firstArgument:otherButtonTitles arguments:args];
+    alertViewBlocks = [[AlertViewBlocks alloc] initAlertWithTitle:title message:message cancelButtonTitle:(cancel ? NSLocalizedString(@"Cancel", nil) : nil) confirm:confirm cancel:cancel firstArgument:otherButtonTitles arguments:args];
     va_end(args);
 }
 
@@ -109,13 +109,7 @@ static AlertViewBlocks *alertViewBlocks;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (indexBlock) {
-        if (buttonIndex == 0) {
-            if (cancelBlock)
-                cancelBlock();
-        }
-        else
-            indexBlock(buttonIndex);
-        
+        indexBlock(buttonIndex);
     } else {
         switch (buttonIndex) {
             case 0: // cancel
