@@ -8,6 +8,15 @@
 
 #import "AlertViewBlocks.h"
 
+#if TARGET_OS_TV
+
+@interface AlertViewBlocks()
+{
+    UIAlertController* alertView;
+}
+
+#elif TARGET_OS_SIMULATOR || TARGET_OS_IOS
+
 @interface AlertViewBlocks() <UIAlertViewDelegate>
 {
     AlertViewBlocksConfirm confirmBlock;
@@ -15,7 +24,10 @@
     AlertViewBlocksIndex indexBlock;
     
     UIAlertView *alertView;
+    
 }
+
+#endif
 
 @end
 
@@ -54,12 +66,46 @@ static AlertViewBlocks *alertViewBlocks;
 - (id)initConfirmViewWithTitle:(NSString*)title message:(NSString*)message YesNo:(BOOL)yesNo confirm:(AlertViewBlocksConfirm)confirm cancel:(AlertViewBlocksCancel)cancel
 {
     if (self = [super init]) {
+        
+#if TARGET_OS_TV
+        
+        alertView = [UIAlertController alertControllerWithTitle:title
+                                                        message:message
+                                                 preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        if (cancel) {
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:yesNo ? NSLocalizedString(@"No", nil) : NSLocalizedString(@"Cancel", nil)
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:^(UIAlertAction * action) {
+                                                                     cancel();
+                                                                 }];
+            [alertView addAction:cancelAction];
+        }
+        
+        if (confirm) {
+            UIAlertAction* okAction = [UIAlertAction actionWithTitle:yesNo ? NSLocalizedString(@"Yes", nil) : NSLocalizedString(@"Ok", nil)
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action) {
+                                                                 confirm();
+                                                             }];
+            [alertView addAction:okAction];
+            
+        }
+        
+        UIViewController* controller = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+        [controller presentViewController:alertView animated:YES completion:nil];
+        
+#elif TARGET_OS_SIMULATOR || TARGET_OS_IOS
+        
         indexBlock = nil;
         confirmBlock = [confirm copy];
         cancelBlock = [cancel copy];
-        
+
         alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:yesNo ? NSLocalizedString(@"No", nil) : NSLocalizedString(@"Cancel", nil) otherButtonTitles:yesNo ? NSLocalizedString(@"Yes", nil) : NSLocalizedString(@"Ok", nil), nil];
         [alertView show];
+        
+#endif
         
     }
     
@@ -69,12 +115,37 @@ static AlertViewBlocks *alertViewBlocks;
 - (id)initAlertViewWithTitle:(NSString*)title message:(NSString*)message confirm:(AlertViewBlocksConfirm)confirm
 {
     if (self = [super init]) {
+        
+#if TARGET_OS_TV
+
+        alertView = [UIAlertController alertControllerWithTitle:title
+                                                        message:message
+                                                 preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        if (confirm) {
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:^(UIAlertAction * action) {
+                                                                     confirm();
+                                                                 }];
+            [alertView addAction:cancelAction];
+        }
+        
+        UIViewController* controller = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+        [controller presentViewController:alertView animated:YES completion:nil];
+        
+#elif TARGET_OS_SIMULATOR || TARGET_OS_IOS
+        
         indexBlock = nil;
         confirmBlock = nil;
         cancelBlock = [confirm copy];
-        
+
         alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil];
         [alertView show];
+        
+#endif
+
     }
     
     return self;
@@ -89,6 +160,43 @@ static AlertViewBlocks *alertViewBlocks;
                arguments:(va_list)args
 {
     if (self = [super init]) {
+        
+#if TARGET_OS_TV
+        
+        alertView = [UIAlertController alertControllerWithTitle:title
+                                                        message:message
+                                                 preferredStyle:UIAlertControllerStyleAlert];
+        
+        if (cancel) {
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:^(UIAlertAction * action) {
+                                                                     cancel();
+                                                                 }];
+            [alertView addAction:cancelAction];
+        }
+        
+        if (confirm) {
+            
+            int count = 0;
+            for (NSString *arg = firstArg; arg != nil; arg = va_arg(args, NSString*))
+            {
+                UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:arg
+                                                                       style:UIAlertActionStyleCancel
+                                                                     handler:^(UIAlertAction * action) {
+                                                                         confirm(count);
+                                                                     }];
+                [alertView addAction:cancelAction];
+                
+                count++;
+            }
+        }
+        
+        UIViewController* controller = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+        [controller presentViewController:alertView animated:YES completion:nil];
+        
+#elif TARGET_OS_SIMULATOR || TARGET_OS_IOS
+        
         confirmBlock = nil;
         indexBlock = [confirm copy];
         cancelBlock = [cancel copy];
@@ -101,10 +209,15 @@ static AlertViewBlocks *alertViewBlocks;
         }
         
         [alertView show];
+        
+#endif
+        
     }
     
     return self;
 }
+
+#if !TARGET_OS_TV
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -130,5 +243,7 @@ static AlertViewBlocks *alertViewBlocks;
     indexBlock = nil;
     alertView = nil;
 }
+
+#endif
 
 @end

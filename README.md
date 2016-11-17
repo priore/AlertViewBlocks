@@ -1,12 +1,13 @@
 **AlertViewBlocks**
 ================
 
-Makes really easy to use AlertView without having a instance variable.
+Makes really easy to use AlertView without having a instance variable for iOS and tvOS.
 
 ## How to use
 
 
 ``` objective-c
+
     [AlertViewBlocks confirmWithTitle:@"Title" message:@"your message here" 
     confirm:^{
         
@@ -21,6 +22,7 @@ Makes really easy to use AlertView without having a instance variable.
 ```
 
 ``` objective-c
+
     [AlertViewBlocks confirmWithTitle:@"Title" message:@"your message here" 
     YesNo:YES confirm:^{
         
@@ -34,6 +36,7 @@ Makes really easy to use AlertView without having a instance variable.
 ```
 
 ``` objective-c
+
     [AlertViewBlocks alertWithTitle:@"Title" message:@"you message here" confirm:^(NSInteger index) {
 
         NSLog(@"Button #%i selected!", index);
